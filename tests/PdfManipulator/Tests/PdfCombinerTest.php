@@ -2,6 +2,8 @@
 
 namespace Tests\PdfManipulator;
 
+use PdfManipulator\PdfCombiner;
+
 class PdfCombinerTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -46,3 +48,4 @@ class PdfCombinerTest extends \PHPUnit_Framework_TestCase
 	}
 
 }
+
