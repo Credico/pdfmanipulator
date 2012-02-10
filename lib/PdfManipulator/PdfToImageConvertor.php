@@ -14,20 +14,25 @@ class PdfToImageConvertor
 		$this->height = $height;
 	}
 	
-	public function convert($source)
+	/** @return Array One image per pdf page */
+	public function convert($original)
 	{
-		$im = new Imagick($source);
+		$sourceFile = tempnam(sys_get_temp_dir(), 'pdf');
+		file_put_contents($sourceFile, $original);
+		
+		$im = new Imagick($sourceFile);
 		$count = $im->getNumberImages();
+		$results = array();
 
 		for($i = 0; $i < $count; $i++)
 		{
-			$sourceImage = new Imagick();
-			$sourceImage->readImage($source."[$i]");
+			$sourcePdf = new Imagick();
+			$sourcePdf->readImage($sourceFile."[$i]");
 
 			// put on top of white background
 			$image = new Imagick();
 			$image->newImage($this->width, $this->height, "white");
-			$image->compositeimage($sourceImage, Imagick::COMPOSITE_OVER, 0, 0);
+			$image->compositeimage($sourcePdf, Imagick::COMPOSITE_OVER, 0, 0);
 			$image->setImageFormat('jpg');
 			// $image->setResolution(144, 144);
 
@@ -35,11 +40,16 @@ class PdfToImageConvertor
 			$image->setImageCompression(Imagick::COMPRESSION_JPEG);
 			$image->setImageCompressionQuality(75);
 
-			$image->writeImage(sprintf('%s/temp/%s_%s.jpg', dirname($source), basename($source), $i));
+			$results[$i] = $image->getImageBlob(); 
+			
 			$image->clear();
 			$image->destroy();
 
 		}
+		
+		@unlink($sourceFile);
+		
+		return $results;
 	}
 }
 

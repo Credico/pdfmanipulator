@@ -20,9 +20,12 @@ class PdfToImageConvertorTest extends \PHPUnit_Framework_TestCase
 	public function ConvertsToJpg()
 	{
 		$convertor = new PdfToImageConvertor(640, 905);
-		$convertor->convert(__DIR__.'/fixture/original1.pdf');
+		$results = $convertor->convert(file_get_contents(__DIR__.'/fixture/original1.pdf'));
+	
+		foreach($results as $result) {
+			file_put_contents(__DIR__.'/fixture/converted.jpg', $result);
+		}
 		
-		
-		$this->assertTrue(true);
+		$this->assertCount(1, $results);
 	}
 }
