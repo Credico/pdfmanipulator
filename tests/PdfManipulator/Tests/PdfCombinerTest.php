@@ -16,7 +16,7 @@ class PdfCombinerTest extends \PHPUnit_Framework_TestCase
 		$pdfCombiner = new PdfCombiner('pdftk');
 		$result = $pdfCombiner->addBackground(
 			file_get_contents(__DIR__.'/fixture/reminder_color.pdf'),
-			file_get_contents(__DIR__.'/fixture/original2.pdf')
+			file_get_contents(__DIR__.'/fixture/reminder_bw.pdf')
 		);
 
 		$this->assertGreaterThan(0, strlen($result), "The resulting pdf should not be zero characters");
@@ -24,15 +24,15 @@ class PdfCombinerTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-         * @test
+	 * @test
 	 * @medium
-         */
+	 */
 	public function Catenates()
 	{
 		$pdfCombiner = new PdfCombiner('pdftk');
 		$result = $pdfCombiner->catenate(array(
 			file_get_contents(__DIR__.'/fixture/reminder_color.pdf'),
-			file_get_contents(__DIR__.'/fixture/original2.pdf'),
+			file_get_contents(__DIR__.'/fixture/reminder_bw.pdf'),
 		));
 
 		$expected = file_get_contents(__DIR__.'/fixture/catenate.pdf');
