@@ -17,6 +17,7 @@ class PdfToImageConvertorTest extends \PHPUnit_Framework_TestCase
 		return array(
 			array(__DIR__.'/fixture/reminder_color.pdf', __DIR__.'/fixture/expected_reminder_color.jpg'),
 			array(__DIR__.'/fixture/reminder_bw.pdf', __DIR__.'/fixture/expected_reminder_bw.jpg'),
+			array(__DIR__.'/fixture/invoice_bw.pdf', __DIR__.'/fixture/expected_invoice_bw.jpg'),
 		);
 	}
 	
