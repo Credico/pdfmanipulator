@@ -27,5 +27,9 @@ class PdfToImageConvertorTest extends \PHPUnit_Framework_TestCase
 		}
 		
 		$this->assertCount(1, $results);
+		$this->assertFileEquals(__DIR__.'/fixture/expected_original1.jpg', __DIR__.'/fixture/converted.jpg', 'The converted jpg differs from the expected jpg');
+		unlink(__DIR__.'/fixture/converted.jpg');
 	}
+	
+
 }
