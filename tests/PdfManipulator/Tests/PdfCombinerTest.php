@@ -15,7 +15,7 @@ class PdfCombinerTest extends \PHPUnit_Framework_TestCase
 	{
 		$pdfCombiner = new PdfCombiner('pdftk');
 		$result = $pdfCombiner->addBackground(
-			file_get_contents(__DIR__.'/fixture/original1.pdf'),
+			file_get_contents(__DIR__.'/fixture/reminder_color.pdf'),
 			file_get_contents(__DIR__.'/fixture/original2.pdf')
 		);
 
@@ -31,7 +31,7 @@ class PdfCombinerTest extends \PHPUnit_Framework_TestCase
 	{
 		$pdfCombiner = new PdfCombiner('pdftk');
 		$result = $pdfCombiner->catenate(array(
-			file_get_contents(__DIR__.'/fixture/original1.pdf'),
+			file_get_contents(__DIR__.'/fixture/reminder_color.pdf'),
 			file_get_contents(__DIR__.'/fixture/original2.pdf'),
 		));
 
