@@ -20,7 +20,7 @@ class PdfCombinerTest extends \PHPUnit_Framework_TestCase
 		);
 
 		$this->assertGreaterThan(0, strlen($result), "The resulting pdf should not be zero characters");
-		$this->assertEquals(file_get_contents(__DIR__.'/fixture/background.pdf'), $result);
+		$this->assertEquals(file_get_contents(__DIR__.'/fixture/expected_background.pdf'), $result);
 	}
 
 	/**
@@ -35,7 +35,7 @@ class PdfCombinerTest extends \PHPUnit_Framework_TestCase
 			file_get_contents(__DIR__.'/fixture/reminder_bw.pdf'),
 		));
 
-		$expected = file_get_contents(__DIR__.'/fixture/catenate.pdf');
+		$expected = file_get_contents(__DIR__.'/fixture/expected_catenate.pdf');
 		$this->assertGreaterThan(0, strlen($result), "The resulting pdf should not be zero characters");
 		$this->assertStringDistanceInPercent('99', $expected, $result);
 	}
