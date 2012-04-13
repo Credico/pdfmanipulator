@@ -28,27 +28,29 @@ class PdfToImageConvertor
 		{
 			$sourcePdf = new Imagick();
 			$sourcePdf->readImage($sourceFile."[$i]");
-
-			// put on top of white background
+			$originalHeight = $sourcePdf->getimageheight();
+			$originalWidth = $sourcePdf->getimagewidth();
+			
 			$image = new Imagick();
-			$image->newImage($this->width, $this->height, "white");
+			$image->newImage($originalWidth, $originalHeight, "white");
+			$image->setimagecolorspace($sourcePdf->getimagecolorspace());
+			$image->setbackgroundcolor("white");
+			
 			$image->compositeimage($sourcePdf, Imagick::COMPOSITE_OVER, 0, 0);
+			
 			$image->setImageFormat('jpg');
-			// $image->setResolution(144, 144);
-
 			$image->setImageUnits(Imagick::RESOLUTION_PIXELSPERINCH);
 			$image->setImageCompression(Imagick::COMPRESSION_JPEG);
 			$image->setImageCompressionQuality(75);
-
+			
+			$image->resizeimage($this->width, $this->height, Imagick::FILTER_LANCZOS, 1, true);
 			$results[$i] = $image->getImageBlob(); 
 			
 			$image->clear();
 			$image->destroy();
-
 		}
 		
 		@unlink($sourceFile);
-		
 		return $results;
 	}
 }
