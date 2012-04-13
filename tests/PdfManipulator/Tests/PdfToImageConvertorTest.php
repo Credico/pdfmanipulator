@@ -15,11 +15,10 @@ class PdfToImageConvertorTest extends \PHPUnit_Framework_TestCase
 	public function providePdfs()
 	{
 		return array(
-			array(__DIR__.'/fixture/reminder_color.pdf', __DIR__.'/fixture/expected_reminder_color.jpg'),
-			array(__DIR__.'/fixture/reminder_bw.pdf', __DIR__.'/fixture/expected_reminder_bw.jpg'),
-			array(__DIR__.'/fixture/invoice_bw.pdf', __DIR__.'/fixture/expected_invoice_bw.jpg'),
-			array(__DIR__.'/fixture/invoice_mac_bw.pdf', __DIR__.'/fixture/expected_reminder_color.jpg'), 
-			array(__DIR__.'/fixture/invoice_mac_color.pdf', __DIR__.'/fixture/expected_reminder_color.jpg')
+			array(__DIR__.'/fixture/fpdf_bw.pdf', __DIR__.'/fixture/result_fpdf_bw.jpg'),
+			array(__DIR__.'/fixture/fpdf_color.pdf', __DIR__.'/fixture/result_fpdf_color.jpg'),
+			array(__DIR__.'/fixture/mac_bw.pdf', __DIR__.'/fixture/result_mac_bw.jpg'),
+			array(__DIR__.'/fixture/mac_color.pdf', __DIR__.'/fixture/result_mac_color.jpg'), 
 		);
 	}
 	
@@ -29,19 +28,16 @@ class PdfToImageConvertorTest extends \PHPUnit_Framework_TestCase
 	 * @medium
 	 * @depends ImagickIsInstalled
 	 */
-	public function ConvertsToJpg($original, $expected)
+	public function ConvertsToJpg($original, $location)
 	{
 		$convertor = new PdfToImageConvertor(640, 905);
 		$results = $convertor->convert(file_get_contents($original));
 	
 		foreach($results as $result) {
-			file_put_contents(__DIR__.'/fixture/converted.jpg', $result);
+			file_put_contents($location, $result);
 		}
 		
 		$this->assertCount(1, $results);
-		//we don't assert for equalness anymore, because for the jpg files, the content is different
-		//$this->assertFileEquals($expected, __DIR__.'/fixture/converted1.jpg', 'The converted jpg differs from the expected jpg');
-		unlink(__DIR__.'/fixture/converted.jpg');
 	}
 	
 
