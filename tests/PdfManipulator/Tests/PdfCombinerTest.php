@@ -27,6 +27,25 @@ class PdfCombinerTest extends \PHPUnit_Framework_TestCase
 	 * @test
 	 * @medium
 	 */
+	public function AddsBackgroundToFirstPage()
+	{
+
+		$pdfCombiner = new PdfCombiner('pdftk');
+
+		$result = $pdfCombiner->addBackgroundToFirstPage(
+			file_get_contents(__DIR__.'/fixture/reminder_multiple.pdf'),
+			file_get_contents(__DIR__.'/fixture/mac_color.pdf')
+		);
+		$expected = file_get_contents(__DIR__.'/fixture/expected_background_first.pdf');
+		$this->assertGreaterThan(0, strlen($result), "The resulting pdf should not be zero characters");
+//		$this->assertEquals($expected, $result);
+		$this->assertStringDistanceInPercent('99', $expected, $result);
+	}
+
+	/**
+	 * @test
+	 * @medium
+	 */
 	public function Catenates()
 	{
 		$pdfCombiner = new PdfCombiner('pdftk');
