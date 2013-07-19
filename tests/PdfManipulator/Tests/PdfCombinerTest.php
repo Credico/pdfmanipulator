@@ -38,7 +38,6 @@ class PdfCombinerTest extends \PHPUnit_Framework_TestCase
 		);
 		$expected = file_get_contents(__DIR__.'/fixture/expected_background_first.pdf');
 		$this->assertGreaterThan(0, strlen($result), "The resulting pdf should not be zero characters");
-//		$this->assertEquals($expected, $result);
 		$this->assertStringDistanceInPercent('99', $expected, $result);
 	}
 
